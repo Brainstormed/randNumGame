@@ -26,15 +26,11 @@ function generateRandom() {
   );
 }
 
-function newGameSetup() {
-  min.value = null;
-  max.value = null;
-  input.value = null;
+min.value = null;
+max.value = null;
+input.value = null;
 
-  enter.value = "✓"
-}
-
-newGameSetup();
+enter.value = "✓";
 
 addMin.addEventListener("click", () =>
   countMinBtn === true ? ((min.value = 0), (countMinBtn = false)) : min.value++
@@ -52,16 +48,18 @@ subMax.addEventListener("click", () =>
 
 addInput.addEventListener("click", () =>
   countInputBtn === true
-    ? ((input.value = 5), (countInputBtn = false))
+    ? ((input.value = generateRandom()), (countInputBtn = false))
     : input.value++
 );
 subInput.addEventListener("click", () =>
   countInputBtn === true
-    ? ((input.value = 5), (countInputBtn = false))
+    ? ((input.value = generateRandom()), (countInputBtn = false))
     : input.value--
 );
 
-enter.addEventListener("click", (e) => {
+enter.addEventListener("click", () => {
+  enter.value = "✓";
+
   if (!min.value || !max.value || !input.value) {
     output.textContent = "Please enter your range and guess properly! 😑";
   } else {
@@ -72,10 +70,6 @@ enter.addEventListener("click", (e) => {
     } else {
       output.textContent = "Wohoo! You've nailed it! 🥳";
       enter.value = "↻";
-
-      enter.addEventListener("click", () => {
-        newGameSetup()
-      });
     }
   }
 });
