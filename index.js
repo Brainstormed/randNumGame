@@ -2,10 +2,6 @@ let min = document.getElementById("min");
 let max = document.getElementById("max");
 let input = document.getElementById("input");
 
-min.value = null;
-max.value = null;
-input.value = null;
-
 let countMinBtn = true;
 let countMaxBtn = true;
 let countInputBtn = true;
@@ -29,6 +25,16 @@ function generateRandom() {
     (Math.floor(Math.random() * (max.value - min.value + 1)) + min.value) / 10
   );
 }
+
+function newGameSetup() {
+  min.value = null;
+  max.value = null;
+  input.value = null;
+
+  enter.value = "✓"
+}
+
+newGameSetup();
 
 addMin.addEventListener("click", () =>
   countMinBtn === true ? ((min.value = 0), (countMinBtn = false)) : min.value++
@@ -55,16 +61,21 @@ subInput.addEventListener("click", () =>
     : input.value--
 );
 
-enter.addEventListener("click", () => {
+enter.addEventListener("click", (e) => {
   if (!min.value || !max.value || !input.value) {
     output.textContent = "Please enter your range and guess properly! 😑";
   } else {
     if (input.value > generateRandom()) {
-      output.textContent = "The number is is lower! 🤨";
+      output.textContent = "The number was is lower! 🤨";
     } else if (input.value < generateRandom()) {
-      output.textContent = "The number is is higher! 🤨";
+      output.textContent = "The number was higher! 🤨";
     } else {
       output.textContent = "Wohoo! You've nailed it! 🥳";
+      enter.value = "↻";
+
+      enter.addEventListener("click", () => {
+        newGameSetup()
+      });
     }
   }
 });
